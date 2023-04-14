@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity minimal  -l:trx;LogFileName=reports/test-report.trx --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test --no-restore --verbosity minimal  -l:"trx;LogFileName=reports/test-report.trx" --collect:"XPlat Code Coverage" --results-directory ./coverage
 
 
       - name: Test Report
@@ -43,3 +43,9 @@ jobs:
           indicators: true
           output: both
           thresholds: '60 80'
+
+      # - name: Run newman Tests
+      #   uses: matt-ball/newman-action@master
+      #   with:
+      #     collection: 'MoodTrackerAPi Integration Tests.postman_collection.json'
+      #     environment: MoodTrackerAPI.postman_environment.json
