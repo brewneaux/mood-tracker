@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "e7ec55ad-831d-4b7d-a1ad-96885fa919f5",
+		"name": "MoodTrackerAPi Integration Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post a Response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gad7\": {\n        \"anxiousNervousOnEdge\": 1,\n        \"cantStopWorrying\": 1,\n        \"worryingAboutTooManyThings\": 1,\n        \"troubleRelaxing\": 1,\n        \"restless\": 1,\n        \"annoyed\": 1,\n        \"afraid\": 1\n    },\n    \"phq9\": {\n        \"littleInterestOrPleasure\": 1,\n        \"downDepressedHopeless\": 1,\n        \"troubleSleeping\": 1,\n        \"feelingTired\": 1,\n        \"appetite\": 1,\n        \"selfLoathing\": 1,\n        \"troubleConcentrating\": 1,\n        \"slowOrFast\": 1,\n        \"selfHarm\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/mood",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"mood"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Summary",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var expected = {",
+							"    \"gad7\": {",
+							"        \"anxiousNervousOnEdge\": 1,",
+							"        \"cantStopWorrying\": 1,",
+							"        \"worryingAboutTooManyThings\": 1,",
+							"        \"troubleRelaxing\": 1,",
+							"        \"restless\": 1,",
+							"        \"annoyed\": 1,",
+							"        \"afraid\": 1,",
+							"        \"score\": 7,",
+							"        \"severity\": \"mild anxiety\"",
+							"    },",
+							"    \"phq9\": {",
+							"        \"littleInterestOrPleasure\": 1,",
+							"        \"downDepressedHopeless\": 1,",
+							"        \"troubleSleeping\": 1,",
+							"        \"feelingTired\": 1,",
+							"        \"appetite\": 1,",
+							"        \"selfLoathing\": 1,",
+							"        \"troubleConcentrating\": 1,",
+							"        \"slowOrFast\": 1,",
+							"        \"selfHarm\": 1,",
+							"        \"score\": 9,",
+							"        \"severity\": \"mild depression\"",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"Test response value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.deep.eql(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/mood/summary",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"mood",
+						"summary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a Response for average checks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"gad7\": {\n        \"anxiousNervousOnEdge\": 3,\n        \"cantStopWorrying\": 3,\n        \"worryingAboutTooManyThings\": 3,\n        \"troubleRelaxing\": 3,\n        \"restless\": 3,\n        \"annoyed\": 3,\n        \"afraid\": 3\n    },\n    \"phq9\": {\n        \"littleInterestOrPleasure\": 3,\n        \"downDepressedHopeless\": 3,\n        \"troubleSleeping\": 3,\n        \"feelingTired\": 3,\n        \"appetite\": 3,\n        \"selfLoathing\": 3,\n        \"troubleConcentrating\": 3,\n        \"slowOrFast\": 3,\n        \"selfHarm\": 3\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/mood",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"mood"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Summary with Averages",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var expected = {",
+							"    \"gad7\": {",
+							"        \"anxiousNervousOnEdge\": 2,",
+							"        \"cantStopWorrying\": 2,",
+							"        \"worryingAboutTooManyThings\": 2,",
+							"        \"troubleRelaxing\": 2,",
+							"        \"restless\": 2,",
+							"        \"annoyed\": 2,",
+							"        \"afraid\": 2,",
+							"        \"score\": 14,",
+							"        \"severity\": \"moderate anxiety\"",
+							"    },",
+							"    \"phq9\": {",
+							"        \"littleInterestOrPleasure\": 2,",
+							"        \"downDepressedHopeless\": 2,",
+							"        \"troubleSleeping\": 2,",
+							"        \"feelingTired\": 2,",
+							"        \"appetite\": 2,",
+							"        \"selfLoathing\": 2,",
+							"        \"troubleConcentrating\": 2,",
+							"        \"slowOrFast\": 2,",
+							"        \"selfHarm\": 2,",
+							"        \"score\": 18,",
+							"        \"severity\": \"moderately severe depression\"",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"Test response value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.deep.eql(expected);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/mood/summary",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"mood",
+						"summary"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
