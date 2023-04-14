@@ -6,24 +6,21 @@ jobs:
   build:
     permissions:
       checks: write
-      
+
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '6.0.x' ]
 
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      - name: Setup .NET Core SDK 7.0.x
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: 7.0.x
       - name: Install dependencies
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity minimal  -l:trx;LogFileName=reports/test-report.trx
+        run: dotnet test --no-restore --verbosity minimal  -l:trx --collect:"XPlat Code Coverage" --results-directory ./coverage
 
 
       - name: Test Report
@@ -33,3 +30,16 @@ jobs:
           name: Tests Results           # Name of the check run which will be created
           path: MoodTrackerApi.Tests/TestResults/*.trx # Path to test results
           reporter: dotnet-trx          # Format of test results
+    
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/**/coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
