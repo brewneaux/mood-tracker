@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity minimal  -l:trx --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test --no-restore --verbosity minimal  -l:trx;LogFileName=reports/test-report.trx --collect:"XPlat Code Coverage" --results-directory ./coverage
 
 
       - name: Test Report
