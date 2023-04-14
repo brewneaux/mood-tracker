@@ -3,18 +3,7 @@ name: Test and Build
 on: [push]
 
 jobs:
-  build:
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  unit-test: 
     permissions:
       checks: write
 
@@ -54,7 +43,23 @@ jobs:
           indicators: true
           output: both
           thresholds: '60 80'
-      
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    services:
+        postgres:
+          image: postgres
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: test
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+
+    steps:
       - name: Install Node
         uses: actions/setup-node@v1
         with: 
@@ -65,6 +70,10 @@ jobs:
           npm install -g newman
 
       - name: Run Postman collection
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
         run: |
           dotnet run --project MoodTrackerAPI;
           newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
