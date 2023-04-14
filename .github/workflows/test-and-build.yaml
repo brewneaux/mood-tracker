@@ -1,9 +1,20 @@
-name: dotnet package
+name: Test and Build
 
 on: [push]
 
 jobs:
   build:
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     permissions:
       checks: write
 
