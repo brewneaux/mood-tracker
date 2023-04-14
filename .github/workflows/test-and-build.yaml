@@ -48,19 +48,19 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-        postgres:
-          image: postgres
-          env:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: test
-          ports:
-            - 5432:5432
-          options: >-
-            --health-cmd pg_isready
-            --health-interval 10s
-            --health-timeout 5s
-            --health-retries 5
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: mysecretpassword
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
@@ -75,10 +75,6 @@ jobs:
           npm install -g newman
 
       - name: Run Postman collection
-        env:
-          POSTGRES__USER: postgres
-          POSTGRES__PASSWORD: postgres
-          POSTGRES__DB: test
         run: |
           dotnet run --project MoodTrackerAPI -lp http-integration-tests
           newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
