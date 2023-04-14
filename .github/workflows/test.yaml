@@ -53,9 +53,9 @@ jobs:
         run: |
           npm install -g newman
 
-      - name: Run POSTMAN collection
+      - name: Run Postman collection
         run: |
-          dotnet run --project MoodTrackerApi;
+          dotnet run --project MoodTrackerAPI;
           newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
       # - name: Run newman Tests
       #   uses: matt-ball/newman-action@master

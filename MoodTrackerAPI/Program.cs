@@ -49,13 +49,15 @@ builder.Services.AddTransient<IDbConnection, NpgsqlConnection>(c => new NpgsqlCo
 builder.Services.AddTransient<IResponseCalculator, ResponseCalculator>();
 builder.Services.AddTransient<IResponseRepository, ResponseRepository>();
 
-var svcProvider = builder.Services.BuildServiceProvider();
-if (svcProvider.GetRequiredService<IOptions<PostgresConnectionConfiguration>>().Value.EnableMigrations)
-{
-    svcProvider.GetRequiredService<IMigrationRunner>().MigrateUp();
-}
+
 
 var app = builder.Build();
+
+if (app.Services.GetRequiredService<IOptions<PostgresConnectionConfiguration>>().Value.EnableMigrations)
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<IMigrationRunner>().MigrateUp();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
