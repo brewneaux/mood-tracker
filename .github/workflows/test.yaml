@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '3.1.x', '6.0.x' ]
+        dotnet-version: [ '6.0.x' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,4 +21,13 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test --no-restore --verbosity normal  -l:trx;LogFileName=reports/test-report.trx
+
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()      # run this step even if previous step failed
+        with:
+          name: Tests Results           # Name of the check run which will be created
+          path: reports/test-report.trx # Path to test results
+          reporter: dotnet-trx          # Format of test results

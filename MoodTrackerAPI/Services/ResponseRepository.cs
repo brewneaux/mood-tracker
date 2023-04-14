@@ -29,7 +29,7 @@ public class ResponseRepository : IResponseRepository
             await InsertGad7(transaction, gad7);
             await InsertPhq9(transaction, phq9);
         }
-        catch (Exception e)
+        catch
         {
             transaction.Rollback();
             throw;
