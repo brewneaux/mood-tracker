@@ -10,7 +10,7 @@ using MoodTrackerAPI.Services;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -19,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Configuration.AddEnvironmentVariables();
 var config = builder.Configuration
     .GetSection("POSTGRES")
     .Get<PostgresConnectionConfiguration>();

@@ -78,7 +78,7 @@ jobs:
           POSTGRES__PASSWORD: postgres
           POSTGRES__DB: test
         run: |
-          dotnet run --project MoodTrackerAPI;
+          dotnet run --project MoodTrackerAPI -lp http-integration-tests
           newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
       # - name: Run newman Tests
       #   uses: matt-ball/newman-action@master

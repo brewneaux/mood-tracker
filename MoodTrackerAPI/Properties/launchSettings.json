@@ -14,6 +14,20 @@
         "POSTGRES__PASSWORD": "mysecretpassword",
         "POSTGRES__DATABASENAME": "test"
       }
+    },
+    "http-integration-tests": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5239",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "POSTGRES__HOST": "postgres",
+        "POSTGRES__USER": "postgres",
+        "POSTGRES__PASSWORD": "mysecretpassword",
+        "POSTGRES__DATABASENAME": "test"
+      }
     }
   }
 }
