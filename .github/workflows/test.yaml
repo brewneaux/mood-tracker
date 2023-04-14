@@ -21,7 +21,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity normal  -l:trx;LogFileName=reports/test-report.trx
+        run: dotnet test --no-restore --verbosity minimal  -l:trx;LogFileName=reports/test-report.trx
 
 
       - name: Test Report
@@ -29,5 +29,5 @@ jobs:
         if: success() || failure()      # run this step even if previous step failed
         with:
           name: Tests Results           # Name of the check run which will be created
-          path: reports/test-report.trx # Path to test results
+          path: MoodTrackerApi.Tests/TestResults/*.trx # Path to test results
           reporter: dotnet-trx          # Format of test results
