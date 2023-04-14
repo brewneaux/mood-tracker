@@ -33,7 +33,7 @@ builder.Services.AddOptions<PostgresConnectionConfiguration>()
 
 if (config != null && config.EnableMigrations)
 {
-    Console.WriteLine("Enabling migrations");
+    Console.WriteLine($"Enabling migrations on {config.Host}:{config.Port}/{config.DatabaseName} using {config.User}:{config.Password}");
     builder.Services.AddFluentMigratorCore()
         .ConfigureRunner(c =>
         {
