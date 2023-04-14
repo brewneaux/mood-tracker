@@ -76,8 +76,8 @@ jobs:
 
       - name: Run Postman collection
         run: |
-          dotnet run --project MoodTrackerAPI
-          newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
+          dotnet run --project MoodTrackerAPI & 
+          sleep 15 && newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
       # - name: Run newman Tests
       #   uses: matt-ball/newman-action@master
       #   with:
