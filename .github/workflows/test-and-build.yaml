@@ -43,6 +43,7 @@ jobs:
           indicators: true
           output: both
           thresholds: '60 80'
+
   integration-tests:
     needs: unit-test
     runs-on: ubuntu-latest
