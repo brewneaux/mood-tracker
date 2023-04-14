@@ -74,9 +74,9 @@ jobs:
 
       - name: Run Postman collection
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
+          POSTGRES__USER: postgres
+          POSTGRES__PASSWORD: postgres
+          POSTGRES__DB: test
         run: |
           dotnet run --project MoodTrackerAPI;
           newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
