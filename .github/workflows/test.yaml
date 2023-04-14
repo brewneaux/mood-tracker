@@ -43,7 +43,20 @@ jobs:
           indicators: true
           output: both
           thresholds: '60 80'
+      
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with: 
+          node-version: '12.x'
 
+      - name: Install newman
+        run: |
+          npm install -g newman
+
+      - name: Run POSTMAN collection
+        run: |
+          dotnet run --project MoodTrackerApi;
+          newman run ./MoodTrackerApi.postman_collection.json -r cli --environment MoodTrackerAPI.postman_environment.json
       # - name: Run newman Tests
       #   uses: matt-ball/newman-action@master
       #   with:
