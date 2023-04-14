@@ -20,7 +20,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --no-restore --verbosity minimal  -l:"trx;LogFileName=reports/test-report.trx" --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test --no-restore --verbosity minimal  -l:"trx;LogFileName=test-report.trx" --collect:"XPlat Code Coverage" --results-directory ./reports
 
 
       - name: Test Report
@@ -28,13 +28,13 @@ jobs:
         if: success() || failure()      # run this step even if previous step failed
         with:
           name: Tests Results           # Name of the check run which will be created
-          path: MoodTrackerApi.Tests/TestResults/*.trx # Path to test results
+          path: reports/*.trx # Path to test results
           reporter: dotnet-trx          # Format of test results
     
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: coverage/**/coverage.cobertura.xml
+          filename: reports/coverage.cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown
